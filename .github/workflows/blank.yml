@@ -1,0 +1,78 @@
+import random
+
+def print_intro():
+    print("Welcome to Adventure Quest!")
+    print("You find yourself in a dense forest, facing three paths.")
+    print("Your goal is to reach the treasure at the end of the quest!")
+    print("Good luck!\n")
+
+def choose_path():
+    print("Choose your path:")
+    print("1. The Path of the Warrior")
+    print("2. The Path of the Mage")
+    print("3. The Path of the Rogue")
+    choice = input("Enter the number of your choice: ")
+
+    if choice == '1':
+        print("\nYou have chosen the Path of the Warrior.")
+        return 'warrior'
+    elif choice == '2':
+        print("\nYou have chosen the Path of the Mage.")
+        return 'mage'
+    elif choice == '3':
+        print("\nYou have chosen the Path of the Rogue.")
+        return 'rogue'
+    else:
+        print("Invalid choice. Please choose again.")
+        return choose_path()
+
+def play_game(player_class):
+    print("\nYou start your journey as a", player_class)
+    print("You encounter a fierce monster blocking your path!")
+    player_hp = 100
+    monster_hp = 50
+    while True:
+        print("\nPlayer HP:", player_hp)
+        print("Monster HP:", monster_hp)
+        action = input("Enter 'a' to attack or 'r' to run: ")
+        if action == 'a':
+            player_attack = random.randint(10, 20)
+            monster_attack = random.randint(5, 15)
+            monster_hp -= player_attack
+            print("You dealt", player_attack, "damage to the monster!")
+            if monster_hp <= 0:
+                print("Congratulations! You defeated the monster!")
+                print("You continue on your quest.")
+                return True
+            player_hp -= monster_attack
+            print("The monster dealt", monster_attack, "damage to you!")
+            if player_hp <= 0:
+                print("Game over! You were defeated by the monster.")
+                return False
+        elif action == 'r':
+            print("You run away from the monster!")
+            return False
+        else:
+            print("Invalid action. Please enter 'a' or 'r'.")
+
+def play_again():
+    while True:
+        choice = input("\nDo you want to play again? (y/n): ")
+        if choice.lower() == 'y':
+            return True
+        elif choice.lower() == 'n':
+            return False
+        else:
+            print("Invalid choice. Please enter 'y' or 'n'.")
+
+def main():
+    print_intro()
+    while True:
+        player_class = choose_path()
+        result = play_game(player_class)
+        if not play_again():
+            print("Thank you for playing Adventure Quest! Goodbye!")
+            break
+
+if __name__ == '__main__':
+    main()
